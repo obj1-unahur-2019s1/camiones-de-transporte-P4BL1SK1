@@ -1,0 +1,9 @@
+import cosas.*
+import camion.*
+test "cosas" {
+	assert.equals(800,bumblebee.peso())
+	assert.equals(15,bumblebee.nivelPeligrosidad())
+	bumblebee.transformar()
+	assert.equals(30,bumblebee.nivelPeligrosidad())
+	
+}
