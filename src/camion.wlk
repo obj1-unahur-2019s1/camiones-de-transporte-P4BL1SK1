@@ -1,24 +1,30 @@
 import cosas.*
 
-object camion {
+class Camion {
 	const property cosas = []
 	var tara=1000
+	const excedencia=2500
 	method cargar(unaCosa){cosas.add(unaCosa)}
 	method descargar(unaCosa){cosas.remove(unaCosa)}
-	method pesoTotal(){return cosas.sum({cosa=>cosa.peso()})+tara}
-	method excedidoDePeso(){return self.pesoTotal()>2500}
+	method pesoTotal(){return tara+cosas.sum{cosa=>cosa.peso()}}
+	method excedidoDePeso(){return self.pesoTotal()>excedencia}
 	method objetosPeligrosos(nivel){
 		return cosas.filter({cosa=>cosa.nivelPeligrosidad()>=nivel})
 		
 	}
 	method objetosMasPeligrosos(cosa){
-		return cosas.filter({cosaX => cosaX.nivelPeligrosidad() > cosa.nivelPeligrosidad() })
+		return self.objetosPeligrosos(cosa)
 	}
 	method puedeCircularEnRuta(nivelMaximoPeligrosidad){
-		return cosas.all({cosa=>cosa.nivelPeligrosidad()<nivelMaximoPeligrosidad})
+		return cosas.all{cosa=>cosa.nivelPeligrosidad()<nivelMaximoPeligrosidad}
 	}
 	method tieneAlgoQuePesaEntre(min, max){
-		return cosas.any({cosas.peso().between(min,max)})
+		return cosas.any{cosas.peso().between(min,max)}
 	}
-		
+	method cosaMasPesada(){
+		return cosas.asSet().max{cosa=>cosa.peso()}
+	}
+	method totalBultos(){
+		return cosas.sum{cosa=>cosa.bulto()}
+	}		
 }
